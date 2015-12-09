@@ -1,0 +1,101 @@
+﻿@model Tree.Models.VMTreeCreate
+@{
+    ViewBag.Title = "CreateUser";
+}
+<h2>Create User</h2>
+@using (Html.BeginForm("CreateUser", "Tree",FormMethod.Post, new {@id = "myForm"}))
+{
+    <div class="row" style="margin-top:15px;">
+        <div class="col-xs-2">
+            <span>User : </span>
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(t => t.Users.Username, new { @class = "form-control", @placeholder = "User" })
+        </div>
+    </div><br />
+    <div class="row">
+        <div class="col-xs-2">
+            <span>Tree Description : </span>
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(t => t.Trees.TreeDescription, new { @class = "form-control", @placeholder = "Tree Description" })
+        </div>
+    </div><br />
+    <div class="row">
+        <div class="col-xs-2">
+            <span>Root Node Text</span>
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(t => t.TreeNodes.Text, new { @class = "form-control", @placeholder = "Text" })
+        </div>
+    </div><br />
+    <div class="row">
+        <div class="col-xs-2">
+            <span>Root Node Value</span>
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(t => t.TreeNodes.Value, new { @class = "form-control", @placeholder = "Value" })
+        </div>
+
+    </div><br />
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-4">
+            <input type="submit" value="Create" class="btn btn-default" />
+            @{
+                @Html.ActionLink("Back To List", "UserList", null, new { @class = "btn btn-default" })<br />
+            }
+        </div>
+    </div>
+}
+@section Scripts{
+<script type="text/javascript">
+    function validate() {
+        var username = $("#Users_Username").val();
+        var treeDescription = $("#Trees_TreeDescription").val();
+        var treeNodeText = $("#TreeNodes_Text").val();
+        var treeNodeValue = $("#TreeNodes_Value").val();
+        var text = "";
+        var isValid = true;
+        
+        if (username == "" || username == null) {
+            isValid = false;
+            text += "Please enter username.\n";
+        }
+        if (treeDescription == "" || treeDescription == null) {
+            isValid = false;
+            text += "Please enter Tree Description.\n";
+        }
+        if (treeNodeText == "" || treeNodeText == null) {
+            isValid = false;
+            text += "Please enter Tree Node Text.\n";
+        }
+        if (treeNodeValue == "" || treeNodeValue == null) {
+            isValid = false;
+            text += "Please enter Tree Node Value.\n";
+        }
+        else {
+            if (!treeNodeValue.match(/^\d+$/)) {
+                isValid = false;
+                text += "Please enter valid Tree Node Value.\n";
+            }
+        }
+        if (!isValid) {
+            alert(text);
+        }
+
+        return isValid;
+    }
+
+    $(function () {
+        $("#myForm").submit(function (event) {
+            
+            var valid = validate();
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+}

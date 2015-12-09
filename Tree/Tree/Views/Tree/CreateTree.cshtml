@@ -1,0 +1,87 @@
+﻿@model Tree.Models.VMTreeCreate
+@{
+    ViewBag.Title = "CreateTree";
+    int id = Convert.ToInt32(TempData["UserId"]);
+}
+<div class="well">
+    @using (Html.BeginForm("CreateTree", "Tree", new { @userId = id }, FormMethod.Post, new { @id = "createTreeForm" }))
+    {
+    <div class="row">
+        <div class="col-xs-2">
+            <span>Description : </span>
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(t => t.Trees.TreeDescription, new { @class = "form-control", @placeholder = "Tree Description" })
+        </div>
+    </div><br />
+        <div class="row">
+            <div class="col-xs-2">
+                <span>Root Node Text</span>
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(t => t.TreeNodes.Text, new { @class = "form-control", @placeholder = "Text" })
+            </div>
+        </div><br />
+        <div class="row">
+            <div class="col-xs-2">
+                <span>Root Node Value</span>
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(t => t.TreeNodes.Value, new { @class = "form-control", @placeholder = "Value" })
+            </div>
+
+        </div><br />
+        <div class="row">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-4">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>
+@section Scripts{
+    <script type="text/javascript">
+    function validate() {
+        var treeDescription = $("#Trees_TreeDescription").val();
+        var treeNodeText = $("#TreeNodes_Text").val();
+        var treeNodeValue = $("#TreeNodes_Value").val();
+        var text = "";
+        var isValid = true;
+
+        if (treeDescription == "" || treeDescription == null) {
+            isValid = false;
+            text += "Please enter Tree Description.\n";
+        }
+        if (treeNodeText == "" || treeNodeText == null) {
+            isValid = false;
+            text += "Please enter Tree Node Text.\n";
+        }
+        if (treeNodeValue == "" || treeNodeValue == null) {
+            isValid = false;
+            text += "Please enter Tree Node Value.\n";
+        }
+        else {
+            if (!treeNodeValue.match(/^\d+$/)) {
+                isValid = false;
+                text += "Please enter valid Tree Node Value.\n";
+            }
+        }
+        if (!isValid) {
+            alert(text);
+        }
+
+        return isValid;
+    }
+
+    $(function () {
+        $("#createTreeForm").submit(function (event) {
+
+            var valid = validate();
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    });
+    </script>
+}

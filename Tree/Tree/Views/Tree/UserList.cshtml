@@ -1,0 +1,31 @@
+﻿@model IEnumerable<DBConnection.Model.VMTreeList>
+@{
+    ViewBag.Title = "UserList";
+}
+
+<h2>User List</h2>
+
+<div class="well">
+    @{
+        @Html.ActionLink("Create User", "CreateUser", null, new { @class = "btn btn-default" })<br /><br />
+    }
+    <table id="table" class="table table-responsive table-bordered">
+        <tr>
+            <th>User</th>
+            <th>Tree</th>
+            <th></th>
+        </tr>
+        @{
+            foreach (var t in Model)
+            {
+            <tr>
+                <td>@t.Username</td>
+                <td>@t.TreeDescription</td>
+                <td>
+                    @Html.ActionLink("View Tree", "Index", new { @userId = @t.UserId, @treeId = @t.TreeId }, new { @class = "btn btn-default" })
+                </td>
+            </tr>
+            }
+        }
+    </table>
+</div>

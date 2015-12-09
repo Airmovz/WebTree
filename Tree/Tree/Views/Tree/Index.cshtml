@@ -1,0 +1,64 @@
+﻿@model Tree.Models.VMDisplay
+@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+<head>
+    <title>Tree</title>
+    <link rel="stylesheet" href="~/Content/TreeStyle.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+</head>
+<body>
+    <div class="row" style="margin-top: 15px;">
+        @Html.ActionLink("Create New Tree", "CreateTree", "Tree", new { @userId = Model.UserId }, new { @class = "btn btn-default" })
+    </div><br />
+    <div class="row">
+        <div class="tree well">
+            @if (Model.TotalNode != 0)
+            {
+            <span>Sum of all nodes : @Model.Sum</span><br />
+            <span>Minimum value :  @Model.MinValue</span><br />
+            <span>Maximum value : @Model.MaxValue</span><br />
+
+                if (Model.CompleteTree != null)
+                {
+                <div class="well">
+                    <span> Complete Tree </span><br /><br />
+                    @foreach (var n in Model.CompleteTree)
+                    {
+                    @Html.ActionLink(@n.ParentId + " : " + @n.Id + " | " + @n.Value, "CreateChildNode", "Tree", new { parentId = @n.Id, sort = @n.Sort, @treeId = @n.TreeId }, new { @class = "btn btn-default" })
+                    }
+                </div>
+                <div class="well">
+                    <span> Minimum Node Tree </span><br />
+                    @foreach (var min in Model.MinTree)
+                    {
+                        if (min.Value == Model.MinValue)
+                        {
+                        <text><br /><br /></text>
+                        }
+                        <button class="btn btn-default">@min.ParentId : @min.Id | @min.Value </button>
+                    }
+                </div>
+                <div class="well">
+                    <span> Maximum Node Tree </span><br />
+                    @foreach (var max in Model.MaxTree)
+                    {
+                        if (max.Value == Model.MaxValue)
+                        {
+                        <text><br /><br /></text>
+                        }
+                        <button class="btn btn-default">@max.ParentId : @max.Id | @max.Value </button>
+                    }
+                </div>
+                }
+            }
+            else {
+            <span>No Tree to be display</span><br />
+            }
+            @Html.ActionLink("Back To List", "UserList", "Tree", new { @class = "btn btn-default" })
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+﻿@model DBConnection.Model.TreeNode
+@{
+    ViewBag.Title = "CreateChildNode";
+}
+
+<h2>CreateChildNode</h2>
+
+@using (Html.BeginForm("CreateChildNode", "Tree", new { @parentId = ViewBag.ParentId, @sort = ViewBag.Sort, @treeId = ViewBag.TreeId }, FormMethod.Post, new { @id = "createChildNodeId" }))
+{
+    <div class="well">
+        <div class="row">
+            <div class="col-xs-2">
+                <span>Node Text</span>
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(t => t.Text, new { @class = "form-control", @placeholder = "Text" })
+            </div>
+        </div><br />
+        <div class="row">
+            <div class="col-xs-2">
+                <span>Node Value</span>
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(t => t.Value, new { @class = "form-control", @placeholder = "Value" })
+            </div>
+
+        </div><br />
+        <div class="row">
+            <div class="col-xs-1"></div>
+            <div class="col-xs-4">
+                <input type="submit" value="Create" class="btn btn-default" />
+                @Html.ActionLink("Back To User List", "UserList", "Tree", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        function validate() {
+
+            var treeNodeText = $("#Text").val();
+        var treeNodeValue = $("#Value").val();
+        var text = "";
+        var isValid = true;
+
+        if (treeNodeText == "" || treeNodeText == null) {
+            isValid = false;
+            text += "Please enter Tree Node Text.\n";
+        }
+        if (treeNodeValue == "" || treeNodeValue == null) {
+            isValid = false;
+            text += "Please enter Tree Node Value.\n";
+        }
+        else {
+            if (!treeNodeValue.match(/^\d+$/)) {
+                isValid = false;
+                text += "Please enter valid Tree Node Value.\n";
+            }
+        }
+        if (!isValid) {
+            alert(text);
+        }
+
+        return isValid;
+    }
+
+    $(function () {
+        $("#createChildNodeId").submit(function (event) {
+
+            var valid = validate();
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    });
+    </script>
+}
