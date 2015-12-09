@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="row" style="margin-top: 15px;">
-        @Html.ActionLink("Create New Tree", "CreateTree", "Tree", new { @userId = Model.UserId }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Create New Tree", "CreateTree", "Tree", new { @userId = Model.UserId }, new { @class = "btn btn-default", @rel = "test" })
     </div><br />
     <div class="row">
         <div class="tree well">
@@ -24,10 +24,10 @@
                 if (Model.CompleteTree != null)
                 {
                 <div class="well">
-                    <span> Complete Tree </span><br /><br />
+                    <span> Complete Tree </span><h6>(Click on node to create a child node.)</h6><br />
                     @foreach (var n in Model.CompleteTree)
                     {
-                    @Html.ActionLink(@n.ParentId + " : " + @n.Id + " | " + @n.Value, "CreateChildNode", "Tree", new { parentId = @n.Id, sort = @n.Sort, @treeId = @n.TreeId }, new { @class = "btn btn-default" })
+                    @Html.ActionLink(@n.ParentId + " : " + @n.Id + " | " + @n.Value, "CreateChildNode", "Tree", new { parentId = @n.Id, sort = @n.Sort, @treeId = @n.TreeId }, new { @class = "btn btn-default" })<text>&nbsp;</text>
                     }
                 </div>
                 <div class="well">
